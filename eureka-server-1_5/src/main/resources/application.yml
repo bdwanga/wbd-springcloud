@@ -12,10 +12,9 @@ eureka:
     serviceUrl:
       defaultZone: http://admin:123@${eureka.instance.hostname}:${server.port}/eureka/
 
-spring:
- security:
-  basic:
-    enabled: true
-  user:
-    name: admin
-    password: 123
+security:
+    basic:
+      enabled: true
+    user:
+      name: admin
+      password: 123

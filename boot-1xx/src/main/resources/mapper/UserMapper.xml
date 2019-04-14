@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wbd.boot1xx.user.dao.IUserDao">
+	<resultMap type="com.wbd.boot1xx.user.model.UserBean" id="USER_MAP">
+		<result property="id" column="USER_ID" />
+		<result property="name" column="USER_NAME" />
+		<result property="password" column="USER_PASSWORD" />
+		<result property="token" column="USER_TOKEN" />
+		<result property="nick" column="USER_NICK" />
+		<result property="orgId" column="USER_ORG" />
+		<result property="orgName" column="ORG_NAME" />
+	</resultMap>
+
+    <sql id="USER_COLUMN_LIST" >
+        A.USER_ID,A.USER_NAME,A.USER_PASSWORD,A.USER_TOKEN,A.USER_NICK,A.USER_ORG
+    </sql>
+
+    <!-- 查询用户信息-->
+    <select id="queryUsers" parameterType="string" resultMap="USER_MAP">
+        SELECT
+        <include refid="USER_COLUMN_LIST"/>
+        FROM WANGBD_USER A
+        WHERE 1=1
+        ORDER BY A.USER_ID
+    </select>
+
+</mapper>

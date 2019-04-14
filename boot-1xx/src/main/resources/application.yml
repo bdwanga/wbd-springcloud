@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: boot-1xx
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    password: root
+#    url: jdbc:mysql://192.168.42.81:3306/mysqlDB?characterEncoding=UTF-8
+#    username: root
+#    type: com.alibaba.druid.pool.DruidDataSource
+sharding:
+   jdbc:
+     datasource:
+       names: db_master,db_slave_0
+       db_master:
+         driverClassName: com.mysql.jdbc.Driver
+         url: jdbc:mysql://192.168.42.101:3306/mysqlDB?characterEncoding=UTF-8
+         username: root
+         password: Root2018.
+         type: com.alibaba.druid.pool.DruidDataSource
+         maxActive: 100
+         filters: stat,wall,log4j2
+         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+         useGlobalDataSourceStat: true
+       db_slave_0:
+         driverClassName: com.mysql.jdbc.Driver
+         url: jdbc:mysql://192.168.42.81:3306/mysqlDB?characterEncoding=UTF-8
+         username: root
+         password: root
+         type: com.alibaba.druid.pool.DruidDataSource
+         maxActive: 100
+         filters: stat,wall,log4j2
+         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+         useGlobalDataSourceStat: true
+     config:
+       masterSlaveRule:
+         name: db_ms
+         masterDataSourceName: db_master
+         slaveDataSourceNames: [db_slave_0]
+
+server:
+  port: 8088
+
+eureka:
+    client:
+      enabled: true
+      registryFetchIntervalSeconds: 5
+      serviceUrl:
+        defaultZone: http://192.168.42.81:8761/eureka/
+    instance:
+      prefer-ip-address: true
+      lease-renewal-interval-in-seconds: 10  # ����������ʱ������Ĭ����30�룩
+      lease-expiration-duration-in-seconds: 5 # ������ڳ�����5��ļ����Ĭ����90�룩
+
+#endpoints:
+#  shutdown:
+#    enabled: true
+#    path: /shutdown
+#  actuator:
+#    enabled: true
+#    path: /actuator
+#  restart:
+#    enabled: true
+#    path: /pause
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+
+management:
+  health:
+    rabbit:
+      enabled: false
+  security:
+    enabled: false
+
+#  security:
+#    enabled: false
+#  port: 9001
+#  address: 127.0.0.1
+#  context-path: /admin
