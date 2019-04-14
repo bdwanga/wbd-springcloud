@@ -25,5 +25,5 @@
 /.nb-gradle/
 
 ### MY ###
-log/
-out/
+/log/
+/out/
